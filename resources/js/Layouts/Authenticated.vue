@@ -18,6 +18,12 @@
                                 <BreezeNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </BreezeNavLink>
+                                <BreezeNavLink :href="route('employees')" :active="route().current('employees')">
+                                    Employees
+                                </BreezeNavLink>
+                                <BreezeNavLink :href="route('companies')" :active="route().current('companies')">
+                                    Companies
+                                </BreezeNavLink>
                             </div>
                         </div>
 
@@ -63,6 +69,12 @@
                     <div class="pt-2 pb-3 space-y-1">
                         <BreezeResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
+                        </BreezeResponsiveNavLink>
+                        <BreezeResponsiveNavLink :href="route('employees')" :active="route().current('employees')">
+                            Employees
+                        </BreezeResponsiveNavLink>
+                        <BreezeResponsiveNavLink :href="route('companies')" :active="route().current('companies')">
+                            Companies
                         </BreezeResponsiveNavLink>
                     </div>
 
