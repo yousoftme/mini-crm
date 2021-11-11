@@ -34,3 +34,13 @@ git branch -M main
 git remote add origin https://github.com/yousoftme/mini-crm.git
 git push -u origin main
 ```
+
+
+#### For Authentication starter kit (Breeze & Inertia) installed
+```
+composer require laravel/breeze --dev
+php artisan breeze:install vue
+npm install
+npm run dev
+php artisan migrate
+```
