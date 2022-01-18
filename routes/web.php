@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,16 +26,16 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
 
-Route::get('/employees', function () {
-    return Inertia::render('Employees');
-})->middleware(['auth', 'verified'])->name('employees');
-
-Route::get('/companies', function () {
-    return Inertia::render('Companies');
-})->middleware(['auth', 'verified'])->name('companies');
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+    
+    Route::resources([
+        'employees' => EmployeeController::class,
+        'companies' => CompanyController::class,
+    ]);
+});
 
 require __DIR__.'/auth.php';

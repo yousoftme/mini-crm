@@ -15,4 +15,12 @@ class Company extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * Get the employees of the company.
+     */
+    public function employees()
+    {
+        return $this->hasMany(Employee::class);
+    }
 }

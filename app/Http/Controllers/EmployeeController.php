@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Employee;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
@@ -15,10 +16,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::orderBy('create_at', 'desc')->paginate(10);
-        
-        return view('employee.index')->with([
-            'employee' => $employees
+        $employees = Employee::with('company')->orderBy('created_at', 'desc')->paginate(10);
+        return Inertia::render('Employees', [
+            'employees' => $employees
         ]);
     }
 

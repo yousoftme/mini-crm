@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Company;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
@@ -15,9 +16,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::orderBy('create_at', 'desc')->paginate(10);
-        
-        return view('company.index')->with([
+        $companies = Company::orderBy('created_at', 'desc')->paginate(10);
+        return Inertia::render('Companies', [
             'companies' => $companies
         ]);
     }

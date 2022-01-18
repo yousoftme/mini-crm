@@ -15,4 +15,12 @@ class Employee extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * Get the company that owns the employee.
+     */
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }
