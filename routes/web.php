@@ -34,8 +34,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     Route::resources([
         'employees' => EmployeeController::class,
-        'companies' => CompanyController::class,
     ]);
+    Route::resource('companies', CompanyController::class)->except(['update']);
+    Route::post('/companies/update', [CompanyController::class, 'update'])->name('companies.update');
 });
 
 require __DIR__.'/auth.php';

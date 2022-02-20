@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Company;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 
@@ -40,7 +41,19 @@ class CompanyController extends Controller
      */
     public function store(StoreCompanyRequest $request)
     {
-        $company = Company::create($request->all());
+        $company = Company::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'website' => $request->website,
+        ]);
+
+        if ($request->hasFile('attachment')) {
+            $name =$request->file('attachment')->getClientOriginalName();
+            $path = $request->file('attachment')->storeAs('/companies/'.$company->id.'/logo', $name, 'public');
+        }
+        $company->update([
+            'logo' => url('storage/'.$path),
+        ]);
         return response()->json($company);
     }
 
@@ -73,9 +86,23 @@ class CompanyController extends Controller
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCompanyRequest $request, Company $company)
+    public function update(UpdateCompanyRequest $request)
     {
-        $company->update($request->all());
+        $company = Company::find($request->company_id);
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'website' => $request->website,
+        ];
+        if ($request->hasFile('attachment')) {
+            $name =$request->file('attachment')->getClientOriginalName();
+            Storage::deleteDirectory('/companies/'.$company->id.'/logo');
+            $path = $request->file('attachment')->storeAs('/companies/'.$company->id.'/logo', $name, 'public');
+        }
+        if (isset($path)) {
+            $data['logo'] = url('storage/'.$path);
+        }
+        $company->update($data);
         return response()->json($company);
     }
 
@@ -87,6 +114,7 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
+        Storage::deleteDirectory('/companies/'.$company->id.'/logo');
         $company->delete();
     }
 }

@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Employee;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use App\Models\Company;
 
 class EmployeeController extends Controller
 {
@@ -17,8 +18,10 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = Employee::with('company')->orderBy('created_at', 'desc')->paginate(10);
+        $companies = Company::orderBy('name', 'asc')->get();
         return Inertia::render('Employees', [
-            'employees' => $employees
+            'employees' => $employees,
+            'companies' => $companies
         ]);
     }
 
@@ -41,6 +44,7 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request)
     {
         $employee = Employee::create($request->all());
+        $employee = Employee::with('company')->where('id', $employee->id)->first();
         return response()->json($employee);
     }
 
@@ -76,6 +80,7 @@ class EmployeeController extends Controller
     public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
         $employee->update($request->all());
+        $employee = Employee::with('company')->where('id', $employee->id)->first();
         return response()->json($employee);
     }
 
