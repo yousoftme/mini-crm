@@ -1,23 +1,7 @@
 <template>
     <Head title="Welcome" />
-
-    <div class="relative flex items-top justify-center min-h-screen bg-gradient-to-br from-green-400 via-blue-400 to-purple-400 sm:items-center sm:pt-0">
-        <div v-if="canLogin" class="font-semibold text-green-900 hidden fixed top-0 right-0 px-6 py-4 sm:block">
-            <Link v-if="$page.props.auth.user" :href="route('dashboard')" class="text-sm underline">
-                Dashboard
-            </Link>
-
-            <template v-else>
-                <Link :href="route('login')" class="text-sm underline">
-                    Log in
-                </Link>
-
-                <Link v-if="canRegister" :href="route('register')" class="ml-4 text-sm underline">
-                    Register
-                </Link>
-            </template>
-        </div>
-
+    <Navbar :canLogin="canLogin" :canRegister="canRegister"></Navbar>
+    <div class="relative flex items-top justify-center min-h-screen bg-gradient-to-br from-green-400 via-blue-400 to-purple-400 py-8 sm:py-0  sm:items-center sm:pt-0">
         <div class="text-center max-w-6xl mx-auto sm:px-6 lg:px-8">
             <Link href="/">
                 <BreezeApplicationLogo class="w-auto h-20 animate__animated animate__zoomIn" />
@@ -39,13 +23,15 @@
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import BreezeApplicationLogo from '@/Components/ApplicationLogo.vue'
 import BreezeButton from '@/Components/Button.vue'
+import Navbar from '@/Components/Navbar.vue'
 
 export default {
     components: {
       Head,
       Link,
       BreezeApplicationLogo,
-      BreezeButton
+      BreezeButton,
+      Navbar
     },
     props: {
         canLogin: Boolean,
