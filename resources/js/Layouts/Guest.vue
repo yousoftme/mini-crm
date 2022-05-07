@@ -1,8 +1,8 @@
 <template>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+    <div class="min-h-screen bg-gradient-to-br from-green-400 via-blue-400 to-purple-400 flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
         <div>
             <Link href="/">
-                <BreezeApplicationLogo class="w-20 h-20 fill-current text-gray-500" />
+                <BreezeApplicationLogo class="w-auto h-20" />
             </Link>
         </div>
 
